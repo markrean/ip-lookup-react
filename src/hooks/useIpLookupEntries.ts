@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useRef, useEffect } from 'react';
 
 type LookupStatus = 'idle' | 'loading' | 'success' | 'error';
 
@@ -15,6 +15,11 @@ const IPv4_REGEX = /^(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d
 
 export const useIpLookupEntries = () => {
   const [entries, setEntries] = useState<IpEntry[]>([{ value: '', status: 'idle' }]);
+  const entriesRef = useRef(entries);
+  
+  useEffect(() => {
+    entriesRef.current = entries;
+  }, [entries]);
 
   const addEntry = useCallback(() => {
     setEntries((prev) => [...prev, { value: '', status: 'idle' }]);
@@ -38,21 +43,17 @@ export const useIpLookupEntries = () => {
   }, []);
 
   const lookupEntry = useCallback(async (index: number) => {
-    let trimmed: string | undefined;
-    let validationFailed = false;
+    // Get the current entry value synchronously from ref
+    const currentEntry = entriesRef.current[index];
+    if (!currentEntry) {
+      return;
+    }
 
-    setEntries((prev) => {
-      const current = prev[index];
-      if (!current) {
-        validationFailed = true;
-        return prev;
-      }
+    const trimmed = currentEntry.value.trim();
 
-      trimmed = current.value.trim();
-
-      if (!trimmed) {
-        validationFailed = true;
-        return prev.map((entry, i) =>
+    if (!trimmed) {
+      setEntries((prev) =>
+        prev.map((entry, i) =>
           i === index
             ? {
                 ...entry,
@@ -63,12 +64,14 @@ export const useIpLookupEntries = () => {
                 countryCode: undefined,
               }
             : entry,
-        );
-      }
+        ),
+      );
+      return;
+    }
 
-      if (!IPv4_REGEX.test(trimmed)) {
-        validationFailed = true;
-        return prev.map((entry, i) =>
+    if (!IPv4_REGEX.test(trimmed)) {
+      setEntries((prev) =>
+        prev.map((entry, i) =>
           i === index
             ? {
                 ...entry,
@@ -79,10 +82,13 @@ export const useIpLookupEntries = () => {
                 countryCode: undefined,
               }
             : entry,
-        );
-      }
+        ),
+      );
+      return;
+    }
 
-      return prev.map((entry, i) =>
+    setEntries((prev) =>
+      prev.map((entry, i) =>
         i === index
           ? {
               ...entry,
@@ -92,12 +98,8 @@ export const useIpLookupEntries = () => {
               timeZone: undefined,
             }
           : entry,
-      );
-    });
-
-    if (validationFailed || !trimmed) {
-      return;
-    }
+      ),
+    );
 
     try {
       const response = await fetch(`https://ipapi.co/${trimmed}/json/`);
