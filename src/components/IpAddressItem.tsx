@@ -84,7 +84,7 @@ const IpAddressItem = ({ index, entry, onChange, onLookup }: IpAddressItemProps)
             placeholder=""
             slotProps={{ htmlInput: { inputMode: 'numeric', pattern: '[0-9.]+' } }}
             sx={{
-              width: 'min(300px, 200px)',
+              width: { xs: '200px', sm: '300px' },
               '& .MuiInputBase-root': {
                 height: 30,
               },
