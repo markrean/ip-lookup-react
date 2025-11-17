@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import IpLookupModal from '../IpLookupModal';
 import { useIpLookupEntries } from '../../hooks/useIpLookupEntries';
@@ -160,16 +160,18 @@ describe('IpLookupModal', () => {
       expect(mockChangeEntryValue).toHaveBeenCalled();
     });
 
-    it('should call lookupEntry when entry blur occurs', () => {
+    it('should call lookupEntry when entry blur occurs', async () => {
       render(<IpLookupModal onClose={mockOnClose} />);
 
       const input = screen.getByRole('textbox');
       fireEvent.blur(input);
 
-      expect(mockLookupEntry).toHaveBeenCalledWith(0);
+      await waitFor(() => {
+        expect(mockLookupEntry).toHaveBeenCalledWith(0);
+      });
     });
 
-    it('should call lookupEntry with correct index for multiple entries', () => {
+    it('should call lookupEntry with correct index for multiple entries', async () => {
       mockUseIpLookupEntries.mockReturnValue({
         entries: [
           { value: '8.8.8.8', status: 'idle' },
@@ -185,7 +187,9 @@ describe('IpLookupModal', () => {
       const inputs = screen.getAllByRole('textbox');
       fireEvent.blur(inputs[1]);
 
-      expect(mockLookupEntry).toHaveBeenCalledWith(1);
+      await waitFor(() => {
+        expect(mockLookupEntry).toHaveBeenCalledWith(1);
+      });
     });
   });
 

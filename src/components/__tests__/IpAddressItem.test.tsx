@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import IpAddressItem from '../IpAddressItem';
 import type { IpEntry } from '../../hooks/useIpLookupEntries';
 
@@ -107,14 +107,16 @@ describe('IpAddressItem', () => {
   });
 
   describe('lookup triggers', () => {
-    it('should call onLookup on blur when not loading', () => {
+    it('should call onLookup on blur when not loading', async () => {
       const entry: IpEntry = { value: '8.8.8.8', status: 'idle' };
       renderComponent(entry);
 
       const input = screen.getByRole('textbox');
       fireEvent.blur(input);
 
-      expect(mockOnLookup).toHaveBeenCalledTimes(1);
+      await waitFor(() => {
+        expect(mockOnLookup).toHaveBeenCalledTimes(1);
+      });
     });
 
     it('should not call onLookup on blur when loading', () => {
