@@ -16,7 +16,7 @@ const IPv4_REGEX = /^(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d
 export const useIpLookupEntries = () => {
   const [entries, setEntries] = useState<IpEntry[]>([{ value: '', status: 'idle' }]);
   const entriesRef = useRef(entries);
-  
+
   useEffect(() => {
     entriesRef.current = entries;
   }, [entries]);
