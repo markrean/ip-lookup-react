@@ -71,7 +71,9 @@ const IpAddressItem = ({ index, entry, onChange, onLookup }: IpAddressItemProps)
             onChange={(event) => handleChange(event.target.value)}
             onBlur={() => {
               if (!isLoading) {
-                onLookup();
+                setTimeout(() => {
+                  onLookup();
+                }, 0);
               }
             }}
             onKeyDown={(event) => {
