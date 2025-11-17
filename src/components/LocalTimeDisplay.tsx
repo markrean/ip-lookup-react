@@ -47,4 +47,3 @@ const LocalTimeDisplay = ({ timeZone, isVisible }: LocalTimeDisplayProps) => {
 };
 
 export default LocalTimeDisplay;
-

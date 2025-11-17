@@ -105,11 +105,11 @@ const IpLookupModal = ({ onClose }: IpLookupModalProps) => {
                 py: 0.5,
                 paddingInlineEnd: 2.5,
                 '&:hover:not(:disabled)': {
-                  backgroundColor: 'var(--button-bg-hover)'
+                  backgroundColor: 'var(--button-bg-hover)',
                 },
                 '&.Mui-disabled': {
                   color: 'var(--button-text-color)',
-                  backgroundColor: 'var(--button-bg-disabled)'
+                  backgroundColor: 'var(--button-bg-disabled)',
                 },
               }}
             >

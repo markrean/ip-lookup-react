@@ -16,7 +16,7 @@ const OpenModalButton = styled(Button)(() => ({
     backgroundColor: 'var(--button-bg-hover)',
   },
   '&:focus-visible': {
-    outline: 0
+    outline: 0,
   },
 }));
 

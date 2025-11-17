@@ -161,7 +161,6 @@ describe('useIpLookupEntries', () => {
       expect(result.current.entries[0].error).toBe('Enter a valid IPv4 address (e.g. 8.8.8.8).');
       expect(global.fetch).not.toHaveBeenCalled();
     });
-
   });
 
   describe('lookupEntry - API calls', () => {
@@ -175,8 +174,8 @@ describe('useIpLookupEntries', () => {
         country_code: 'us',
       };
 
-      let resolvePromise: (value: any) => void;
-      const promise = new Promise((resolve) => {
+      let resolvePromise: (value: typeof mockResponse) => void;
+      const promise = new Promise<typeof mockResponse>((resolve) => {
         resolvePromise = resolve;
       });
 
@@ -215,8 +214,8 @@ describe('useIpLookupEntries', () => {
         country_code: 'us',
       };
 
-      let resolvePromise: (value: any) => void;
-      const promise = new Promise((resolve) => {
+      let resolvePromise: (value: typeof mockResponse) => void;
+      const promise = new Promise<typeof mockResponse>((resolve) => {
         resolvePromise = resolve;
       });
 
@@ -252,4 +251,3 @@ describe('useIpLookupEntries', () => {
     });
   });
 });
-

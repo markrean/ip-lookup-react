@@ -99,7 +99,7 @@ const IpAddressItem = ({ index, entry, onChange, onLookup }: IpAddressItemProps)
               },
               '& .MuiInputBase-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
                 borderWidth: 1,
-              }
+              },
             }}
           />
         </Box>

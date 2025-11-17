@@ -40,7 +40,9 @@ describe('IpLookupModal', () => {
     it('should render description text', () => {
       render(<IpLookupModal onClose={mockOnClose} />);
 
-      expect(screen.getByText('Enter one or more IP addresses and get their country.')).toBeInTheDocument();
+      expect(
+        screen.getByText('Enter one or more IP addresses and get their country.'),
+      ).toBeInTheDocument();
     });
 
     it('should render Add button', () => {
@@ -203,4 +205,3 @@ describe('IpLookupModal', () => {
     });
   });
 });
-

@@ -30,7 +30,9 @@ describe('LocalTimeDisplay', () => {
   });
 
   it('should render nothing when isVisible is false', () => {
-    const { container } = render(<LocalTimeDisplay timeZone="America/Los_Angeles" isVisible={false} />);
+    const { container } = render(
+      <LocalTimeDisplay timeZone="America/Los_Angeles" isVisible={false} />,
+    );
     expect(container.firstChild).toBeNull();
   });
 
@@ -90,7 +92,9 @@ describe('LocalTimeDisplay', () => {
 
   it('should clear interval when component unmounts', () => {
     const clearIntervalSpy = jest.spyOn(window, 'clearInterval');
-    const { unmount } = render(<LocalTimeDisplay timeZone="America/Los_Angeles" isVisible={true} />);
+    const { unmount } = render(
+      <LocalTimeDisplay timeZone="America/Los_Angeles" isVisible={true} />,
+    );
 
     act(() => {
       unmount();
@@ -102,7 +106,9 @@ describe('LocalTimeDisplay', () => {
 
   it('should clear interval and reset when isVisible changes to false', async () => {
     const clearIntervalSpy = jest.spyOn(window, 'clearInterval');
-    const { rerender } = render(<LocalTimeDisplay timeZone="America/Los_Angeles" isVisible={true} />);
+    const { rerender } = render(
+      <LocalTimeDisplay timeZone="America/Los_Angeles" isVisible={true} />,
+    );
 
     expect(screen.getByText('12:34:56')).toBeInTheDocument();
 
@@ -115,7 +121,9 @@ describe('LocalTimeDisplay', () => {
 
   it('should clear interval and reset when timeZone changes', async () => {
     const clearIntervalSpy = jest.spyOn(window, 'clearInterval');
-    const { rerender } = render(<LocalTimeDisplay timeZone="America/Los_Angeles" isVisible={true} />);
+    const { rerender } = render(
+      <LocalTimeDisplay timeZone="America/Los_Angeles" isVisible={true} />,
+    );
 
     expect(screen.getByText('12:34:56')).toBeInTheDocument();
 
@@ -156,4 +164,3 @@ describe('LocalTimeDisplay', () => {
     expect(typography).toHaveClass('MuiTypography-body2');
   });
 });
-
